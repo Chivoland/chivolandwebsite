@@ -232,6 +232,10 @@
       transition: transform .5s;
       display: block;
     }
+    .animal-img-wrap.full-image img {
+      object-fit: contain;
+      background: var(--bark);
+    }
     .animal-card:hover .animal-img-wrap img { transform: scale(1.05); }
     .animal-body { padding: 1.6rem; }
     .animal-tag {
@@ -633,7 +637,7 @@
 
       <!-- Chickens & Eggs -->
       <div class="animal-card">
-        <div class="animal-img-wrap animal-carousel" data-animal="chicken">
+        <div class="animal-img-wrap animal-carousel full-image" data-animal="chicken">
           <img src="chiken.JPG" alt="Chickens at Chivoland" class="carousel-slide active"/>
         </div>
         <div class="animal-body">
