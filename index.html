@@ -463,18 +463,13 @@
       overflow: hidden;
     }
     .carousel-slide {
-      width: 100%; height: 100%; object-fit: cover;
-      position: absolute; top: 0; left: 0;
-      opacity: 0; transition: opacity .6s ease;
-      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
     }
     .carousel-slide.active {
-      opacity: 1;
-      position: relative; /* holds the container open */
-      height: auto;
-    }
-    .animal-img-wrap.animal-carousel {
-      aspect-ratio: unset; /* let the active slide drive the height */
+      display: block;
     }
     .carousel-btn {
       position: absolute; top: 50%; transform: translateY(-50%);
