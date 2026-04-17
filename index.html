@@ -313,26 +313,6 @@
     }
     .sale-cta:hover { color: var(--hay); border-color: var(--hay); }
 
-    /* ── GALLERY ── */
-    #gallery { background: var(--soil); }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: auto auto;
-      gap: 1rem; margin-top: 2.5rem;
-    }
-    .gallery-item {
-      overflow: hidden; border-radius: 3px;
-      position: relative;
-    }
-    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-    .gallery-item img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform .5s;
-      display: block;
-      min-height: 180px;
-    }
-    .gallery-item:hover img { transform: scale(1.05); }
 
     /* ── SOLD CARDS ── */
     .sold-card {
@@ -505,8 +485,6 @@
       .about-grid,
       .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .livestock-grid { grid-template-columns: 1fr 1fr; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; }
-      .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
     }
     @media (max-width: 600px) {
       nav { padding: .8rem 1rem; }
@@ -514,8 +492,6 @@
       .nav-links a { font-size: .75rem; }
       .livestock-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
-      .gallery-grid { grid-template-columns: 1fr; }
-      .gallery-item:nth-child(1) { grid-column: span 1; }
     }
   </style>
 </head>
@@ -528,7 +504,6 @@
     <li><a href="#about">About</a></li>
     <li><a href="#livestock">Livestock</a></li>
     <li><a href="#forsale">For Sale</a></li>
-    <li><a href="#gallery">Gallery</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
@@ -917,7 +892,7 @@
     });
   }, { threshold: 0.12 });
 
-  document.querySelectorAll('.livestock-card, .sale-card, .stat-card, .gallery-item, .contact-item').forEach(el => {
+  document.querySelectorAll('.livestock-card, .sale-card, .stat-card, .contact-item').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity .6s ease, transform .6s ease';
