@@ -456,6 +456,43 @@
       50%      { opacity: 1; transform: scaleY(1.15); }
     }
 
+    /* ── CAROUSEL ── */
+    .animal-carousel {
+      position: relative;
+    }
+    .carousel-slide {
+      width: 100%; height: 100%; object-fit: cover;
+      position: absolute; top: 0; left: 0;
+      opacity: 0; transition: opacity .6s ease;
+      display: block;
+    }
+    .carousel-slide.active {
+      opacity: 1;
+      position: relative;
+    }
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(15,35,24,.65); color: var(--hay);
+      border: 1px solid rgba(126,200,122,.35);
+      width: 32px; height: 32px; border-radius: 2px;
+      font-size: 1rem; cursor: pointer; z-index: 5;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .2s;
+    }
+    .animal-carousel:hover .carousel-btn { opacity: 1; }
+    .carousel-btn.prev { left: .5rem; }
+    .carousel-btn.next { right: .5rem; }
+    .carousel-dots {
+      position: absolute; bottom: .5rem; left: 50%; transform: translateX(-50%);
+      display: flex; gap: .35rem; z-index: 5;
+    }
+    .carousel-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(245,237,216,.4); cursor: pointer;
+      transition: background .2s;
+    }
+    .carousel-dot.active { background: var(--hay); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
@@ -559,8 +596,8 @@
 
       <!-- Katahdin Sheep -->
       <div class="animal-card">
-        <div class="animal-img-wrap">
-          <img src="https://images.unsplash.com/photo-1484557052118-f32bd25b45b5?w=700&auto=format&fit=crop" alt="Katahdin Sheep at Chivoland"/>
+        <div class="animal-img-wrap animal-carousel" data-animal="sheep">
+          <img src="sheep.jpg" alt="Katahdin Sheep at Chivoland" class="carousel-slide active"/>
         </div>
         <div class="animal-body">
           <div class="animal-tag">Katahdin Sheep</div>
@@ -571,8 +608,8 @@
 
       <!-- Cattle -->
       <div class="animal-card">
-        <div class="animal-img-wrap">
-          <img src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=700&auto=format&fit=crop" alt="Cattle at Chivoland"/>
+        <div class="animal-img-wrap animal-carousel" data-animal="cow">
+          <img src="cow.jpg" alt="Cattle at Chivoland" class="carousel-slide active"/>
         </div>
         <div class="animal-body">
           <div class="animal-tag">Cattle</div>
@@ -583,8 +620,8 @@
 
       <!-- Goats -->
       <div class="animal-card">
-        <div class="animal-img-wrap">
-          <img src="https://images.unsplash.com/photo-1509822929063-6b6cfc9b42f2?w=700&auto=format&fit=crop" alt="Goats at Chivoland"/>
+        <div class="animal-img-wrap animal-carousel" data-animal="goat">
+          <img src="goat.jpg" alt="Goats at Chivoland" class="carousel-slide active"/>
         </div>
         <div class="animal-body">
           <div class="animal-tag">Goats</div>
@@ -595,8 +632,8 @@
 
       <!-- Chickens & Eggs -->
       <div class="animal-card">
-        <div class="animal-img-wrap">
-          <img src="https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=700&auto=format&fit=crop" alt="Chickens at Chivoland"/>
+        <div class="animal-img-wrap animal-carousel" data-animal="chicken">
+          <img src="chicken.jpg" alt="Chickens at Chivoland" class="carousel-slide active"/>
         </div>
         <div class="animal-body">
           <div class="animal-tag">Chickens &amp; Eggs</div>
@@ -890,3 +927,46 @@
     const interest = document.getElementById('interest').value;
     const msg   = document.getElementById('message').value;
     const subjec
+
+  // ── CAROUSEL SETUP ──
+  // To add more photos to any card, add more <img class="carousel-slide" src="..."> 
+  // inside the .animal-img-wrap div. The carousel handles the rest automatically.
+  document.querySelectorAll('.animal-carousel').forEach(wrap => {
+    const slides = wrap.querySelectorAll('.carousel-slide');
+    if (slides.length <= 1) return; // no carousel needed for single image
+
+    let current = 0;
+
+    // Dots
+    const dotsWrap = document.createElement('div');
+    dotsWrap.className = 'carousel-dots';
+    slides.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    });
+    wrap.appendChild(dotsWrap);
+
+    // Prev / Next buttons
+    const prev = document.createElement('button');
+    prev.className = 'carousel-btn prev';
+    prev.innerHTML = '&#8249;';
+    prev.addEventListener('click', () => goTo((current - 1 + slides.length) % slides.length));
+
+    const next = document.createElement('button');
+    next.className = 'carousel-btn next';
+    next.innerHTML = '&#8250;';
+    next.addEventListener('click', () => goTo((current + 1) % slides.length));
+
+    wrap.appendChild(prev);
+    wrap.appendChild(next);
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      dotsWrap.children[current].classList.remove('active');
+      current = idx;
+      slides[current].classList.add('active');
+      dotsWrap.children[current].classList.add('active');
+    }
+  });
